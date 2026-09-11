@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { getServerSession } from "@/hooks/get-server-session";
 import prisma from "@/lib/prisma";
 import { cn } from "@/lib/utils";
+import { formatPlainText } from "@/lib/format-text";
 
 type Risk = "HIGH" | "MEDIUM" | "LOW";
 
@@ -324,42 +325,39 @@ export default async function SingleAssessment({
                 </p>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-[0.7fr_1.3fr]">
-                <div className="rounded-lg border p-4">
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
-                    Factors evaluated
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {symptoms.length > 0 ? (
-                      symptoms.map((symptom) => (
-                        <span
-                          key={symptom}
-                          className="rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground"
-                        >
-                          {symptom}
-                        </span>
-                      ))
-                    ) : (
-                      <p className="text-xs text-muted-foreground">None flagged</p>
-                    )}
+              <div className="rounded-lg border p-4">
+                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2.5">
+                  Factors evaluated
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {symptoms.length > 0 ? (
+                    symptoms.map((symptom) => (
+                      <span
+                        key={symptom}
+                        className="rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground font-medium"
+                      >
+                        {symptom}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-xs text-muted-foreground">None flagged</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-lg border p-5 bg-card">
+                <div className="mb-4 flex items-center gap-2.5">
+                  <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <Brain size={15} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-foreground">Assessment Explanation</h3>
+                    <p className="text-xs text-muted-foreground">Detailed risk factor breakdown & analysis</p>
                   </div>
                 </div>
-
-                <div className="rounded-lg border p-4">
-                  <div className="mb-3 flex items-center gap-2">
-                    <div className="flex size-7 items-center justify-center rounded-full bg-muted">
-                      <Brain size={13} className="text-muted-foreground" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">AI Machine Learning explanation</p>
-                      <p className="text-xs text-muted-foreground">
-                        Groq LLaMA 3.3 70B Decision Support
-                      </p>
-                    </div>
-                  </div>
-                  <p className="max-h-[28rem] overflow-y-auto pr-2 text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {assessment.aiResponse}
-                  </p>
+                <Separator className="mb-4" />
+                <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line font-normal space-y-2">
+                  {formatPlainText(assessment.aiResponse)}
                 </div>
               </div>
             </div>

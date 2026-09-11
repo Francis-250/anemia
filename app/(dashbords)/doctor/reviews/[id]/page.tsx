@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { requireDoctorPage } from "@/lib/doctor-auth";
 import { asStringArray, formatDate, formatTime } from "@/lib/doctor";
+import { formatPlainText } from "@/lib/format-text";
 import prisma from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 
@@ -135,11 +136,11 @@ export default async function DoctorReviewDetail({
             <div className="flex items-center gap-2.5 mb-4">
               <div className="size-8 rounded-full bg-muted flex items-center justify-center"><Brain size={14} /></div>
               <div>
-                <p className="text-sm font-medium">AI response</p>
-                <p className="text-xs text-muted-foreground">Groq LLaMA 3.3 70B</p>
+                <p className="text-sm font-medium">Assessment Analysis</p>
+                <p className="text-xs text-muted-foreground">Decision support evaluation</p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed">{assessment.aiResponse}</p>
+            <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed">{formatPlainText(assessment.aiResponse)}</p>
             <Separator className="my-4" />
             <p className="text-xs font-medium mb-1">Recommendation</p>
             <p className="text-sm text-muted-foreground leading-relaxed">{assessment.recommendation}</p>

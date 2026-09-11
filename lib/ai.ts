@@ -67,9 +67,12 @@ Response Format:
 3. CONTRIBUTING FACTORS DETECTED: [list identified symptoms and risk factors]
 4. CLINICAL ANALYSIS: [brief explanation of risk evaluation]
 5. RECOMMENDATION: [clear action steps & guidance]
-6. MEDICAL DISCLAIMER: "Your information indicates a [LEVEL] risk of anemia. This is not a medical diagnosis. Please seek professional healthcare assessment and appropriate laboratory testing."
+6. MEDICAL DISCLAIMER: "Your information indicates a [LEVEL] risk of anemia. This is not a medical diagnosis. Please seek professional healthcare assessment."
 
-IMPORTANT: Never diagnose. Always frame outputs as preliminary risk estimates.`;
+IMPORTANT FORMATTING RULES:
+- Write strictly in clean plain text.
+- Do NOT use Markdown asterisks (* or **), hashes (#), or bullet asterisks.
+- Never diagnose. Always frame outputs as preliminary risk estimates.`;
 
 // ----------------------------------------------------------------
 // 3. PROMPT TEMPLATES
