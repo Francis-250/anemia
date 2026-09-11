@@ -8,7 +8,12 @@ export const metadata: Metadata = {
   title: "AI-Based Anemia Risk Prediction System Using Machine Learning",
   description: "AI-powered anemia risk prediction and preliminary health screening using machine learning",
   icons: {
-    icon: "/images/favi.jpeg",
+    icon: [
+      { url: "/images/anemia-favicon.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/images/anemia-favicon.png",
+    apple: "/images/anemia-favicon.png",
   },
 };
 

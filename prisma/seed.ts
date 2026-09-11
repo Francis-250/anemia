@@ -1,12 +1,6 @@
 import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "better-auth/crypto";
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
-});
-const prisma = new PrismaClient({ adapter });
+import prisma from "../lib/prisma";
 
 const password = process.env.SEED_USER_PASSWORD ?? "AnemiaCheck123!";
 

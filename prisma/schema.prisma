@@ -233,6 +233,7 @@ model DoctorProfile {
   comments                DoctorComment[]
   assignments             PatientDoctorAssignment[]
   feedback                DoctorFeedback[]
+  uploadedDatasets        DoctorDataset[]
 
   @@map("doctor_profile")
 }
@@ -427,3 +428,28 @@ model SystemSetting {
 
   @@map("system_setting")
 }
+
+model DoctorDataset {
+  id                      String        @id @default(cuid())
+  fileName                String
+  doctorProfileId         String
+  doctorProfile           DoctorProfile @relation(fields: [doctorProfileId], references: [id], onDelete: Cascade)
+  
+  totalRecords            Int
+  highRiskCount           Int
+  mediumRiskCount         Int
+  lowRiskCount            Int
+  anemiaPrevalencePercent Float
+  avgConfidenceScore      Float
+  
+  rawCsvData              String        @db.Text
+  analysisSummaryJson     String        @db.Text
+
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+
+  @@index([doctorProfileId])
+  @@index([createdAt])
+  @@map("doctor_dataset")
+}
+

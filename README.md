@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI-Based Anemia Risk Prediction System Using Machine Learning
 
-## Getting Started
+An intelligent, AI-powered healthcare decision-support application for preliminary anemia risk assessment and screening using machine learning principles.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🔑 Test Credentials
+
+The system comes pre-seeded with verified test accounts for testing across all three user roles:
+
+| Role | Email | Password | Access Level |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@anemiacheck.test` | `AnemiaCheck123!` | Full System Administration & Management |
+| **Doctor** | `doctor@anemiacheck.test` | `AnemiaCheck123!` | Clinical Review, Comments & Batch CSV Prediction |
+| **Patient** | `patient@anemiacheck.test` | `AnemiaCheck123!` | Risk Self-Assessment & Doctor Consultation |
+
+> **Note**: You can re-seed these accounts at any time by running `npm run db:seed`.
+
+---
+
+## ✨ Key Features
+
+- **AI Anemia Risk Prediction**: Evaluates reported symptoms, nutritional factors, and clinical indicators to generate preliminary risk classifications (**HIGH**, **MODERATE**, **LOW**) with confidence scores and clinical guidance.
+- **Patient Portal**: Interactive assessment questionnaire, historical assessment tracker, doctor assignment, and profile management.
+- **Doctor Portal & Decision Support**: Review assigned patient assessments, add clinical feedback and urgent alerts, and update review statuses.
+- **Batch CSV Dataset Analysis**: Enables doctors to upload `.csv` patient dataset files, run machine learning predictions in bulk, filter by risk level, inspect individual records, and export predicted datasets.
+- **Admin Management Console**: Manage user accounts, approve/verify doctors, assign doctor reviews, inspect audit logs, and configure AI decision model settings.
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **Node.js**: v18+ or v20+
+- **pnpm**: v10+ (or npm/yarn)
+- **PostgreSQL Database** (or Neon Serverless Postgres)
+
+### 2. Environment Setup
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/anemia?schema=public"
+BETTER_AUTH_SECRET="your-auth-secret"
+BETTER_AUTH_URL="http://localhost:3000"
+GROQ_API_KEY="your-groq-api-key"
+GROQ_MODEL="openai/gpt-oss-20b"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Database Migration & Seeding
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Push database schema
+npx prisma db push
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Seed test user accounts
+npm run db:seed
+```
 
-## Learn More
+### 4. Run Development Server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚕️ Medical Disclaimer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*This tool provides preliminary AI-assisted risk estimations based on machine learning models and reported symptoms. It does **NOT** provide a medical diagnosis. Confirmed diagnosis requires evaluation by a qualified healthcare professional and appropriate laboratory testing (such as a Complete Blood Count / Hemoglobin test).*

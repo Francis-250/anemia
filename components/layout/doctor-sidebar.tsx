@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ClipboardList, Home, LogOut, Menu, User } from "lucide-react";
+import { ClipboardList, FileSpreadsheet, Home, LogOut, Menu, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
 const links = [
   { label: "Dashboard", href: "/doctor", icon: Home },
   { label: "Reviews", href: "/doctor/reviews", icon: ClipboardList },
+  { label: "Dataset Analysis", href: "/doctor/dataset", icon: FileSpreadsheet },
   { label: "Profile", href: "/doctor/profile", icon: User },
 ];
 

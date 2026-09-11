@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { FileSpreadsheet, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { DoctorAssessmentList } from "@/components/doctor-assessment-list";
 import { Badge } from "@/components/ui/badge";
 import { requireDoctorPage } from "@/lib/doctor-auth";
@@ -40,16 +43,23 @@ export default async function DoctorDashboard() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
-      <div className="mb-8">
-        <p className="text-xs text-muted-foreground mb-1">
-          {new Intl.DateTimeFormat("en", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }).format(today)}
-        </p>
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-xs text-muted-foreground mb-1">
+            {new Intl.DateTimeFormat("en", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            }).format(today)}
+          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+        </div>
+        <Button asChild size="sm" className="gap-2">
+          <Link href="/doctor/dataset">
+            <FileSpreadsheet size={15} /> Batch CSV Predictions <ArrowRight size={13} />
+          </Link>
+        </Button>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, Brain, Stethoscope, Users } from "lucide-react";
+import { AlertTriangle, ArrowRight, Brain, FileSpreadsheet, Stethoscope, Users } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin-page-header";
 import { Badge } from "@/components/ui/badge";
 import { requireAdminPage } from "@/lib/admin-auth";
@@ -8,20 +8,21 @@ import prisma from "@/lib/prisma";
 
 export default async function AdminDashboard() {
   await requireAdminPage();
-  const [users, doctors, assessments, pendingDoctors, highRisk, aiFailures, recentLogs] = await Promise.all([
+  const [users, doctors, assessments, pendingDoctors, highRisk, aiFailures, uploadedDatasets, recentLogs] = await Promise.all([
     prisma.user.count(),
     prisma.doctorProfile.count(),
     prisma.assessment.count(),
     prisma.doctorProfile.count({ where: { isApprovedByAdmin: false } }),
     prisma.assessment.count({ where: { riskLevel: "HIGH", reviewedByDoctor: false } }),
     prisma.aiUsageLog.count({ where: { status: { not: "SUCCESS" } } }),
+    prisma.doctorDataset.count(),
     prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 8, include: { user: { select: { name: true } } } }),
   ]);
   const cards = [
     { label: "Total users", value: users, href: "/admin/users", icon: Users },
     { label: "Doctor profiles", value: doctors, href: "/admin/doctors", icon: Stethoscope },
     { label: "Assessments", value: assessments, href: "/admin/assessments", icon: AlertTriangle },
-    { label: "AI failures", value: aiFailures, href: "/admin/ai", icon: Brain },
+    { label: "Uploaded datasets", value: uploadedDatasets, href: "/admin/datasets", icon: FileSpreadsheet },
   ];
 
   return (
@@ -34,6 +35,7 @@ export default async function AdminDashboard() {
         <div className="space-y-3">
           <Link href="/admin/doctors" className="rounded-lg border p-4 flex items-center justify-between hover:bg-muted/30"><div><p className="text-sm font-medium">Pending doctor approvals</p><p className="text-xs text-muted-foreground mt-1">Credentials awaiting review</p></div><Badge variant={pendingDoctors ? "destructive" : "secondary"}>{pendingDoctors}</Badge></Link>
           <Link href="/admin/assessments" className="rounded-lg border p-4 flex items-center justify-between hover:bg-muted/30"><div><p className="text-sm font-medium">Unreviewed high risk</p><p className="text-xs text-muted-foreground mt-1">Assessments needing attention</p></div><Badge variant={highRisk ? "destructive" : "secondary"}>{highRisk}</Badge></Link>
+          <Link href="/admin/datasets" className="rounded-lg border p-4 flex items-center justify-between hover:bg-muted/30"><div><p className="text-sm font-medium">Doctor CSV Datasets</p><p className="text-xs text-muted-foreground mt-1">Bulk batch prediction runs</p></div><Badge variant="secondary">{uploadedDatasets}</Badge></Link>
         </div>
         <div className="lg:col-span-2 rounded-lg border overflow-hidden">
           <div className="border-b px-4 py-3 flex items-center justify-between"><p className="text-sm font-medium">Recent audit activity</p><Link href="/admin/audit" className="text-xs text-muted-foreground flex items-center gap-1">View all <ArrowRight size={12} /></Link></div>
